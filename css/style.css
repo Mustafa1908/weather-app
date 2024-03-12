@@ -1,0 +1,50 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-image: url(../image/mountagne.jpg);
+  background-repeat: no-repeat;
+  height: auto;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.search-location-weather-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 0.2rem;
+  padding-right: 2rem;
+  padding-top: 1.4rem;
+}
+
+#user-input {
+  border: 1px solid transparent;
+  border-radius: 3rem;
+  width: 14rem;
+  height: 1.7rem;
+  outline: none;
+}
+
+#submit-location {
+  font-size: 2rem;
+}
+
+#submit-location:hover {
+  cursor: pointer;
+}
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
