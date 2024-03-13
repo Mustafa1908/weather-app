@@ -32,63 +32,70 @@ let locationArray = [
 let weatherPredictionArray = [[], [], []];
 
 async function getLocationWeather(location) {
-  let userLocation = await fetch(
-    `https://api.weatherapi.com/v1/forecast.json?key=95005ff1b5cc46719bd155353241003&q=${location}&days=3`,
-    {
-      mode: "cors",
+  try {
+    let errorMessage = document.querySelector(".error-message");
+    errorMessage.innerText = "";
+    let userLocation = await fetch(
+      `https://api.weatherapi.com/v1/forecast.json?key=95005ff1b5cc46719bd155353241003&q=${location}&days=3`,
+      {
+        mode: "cors",
+      }
+    );
+
+    let weatherJson = await userLocation.json();
+    for (let i = 0; i < 3; i++) {
+      locationArray[i].push(weatherJson.forecast.forecastday[i].day.maxtemp_c);
+      locationArray[i].push(weatherJson.forecast.forecastday[i].day.mintemp_c);
     }
-  );
 
-  let weatherJson = await userLocation.json();
-  for (let i = 0; i < 3; i++) {
-    locationArray[i].push(weatherJson.forecast.forecastday[i].day.maxtemp_c);
-    locationArray[i].push(weatherJson.forecast.forecastday[i].day.mintemp_c);
+    for (let i = 0; i < 23; i++) {
+      locationArray[3].push(weatherJson.forecast.forecastday[0].hour[i]);
+      weatherPredictionArray[0].push([]);
+      weatherPredictionArray[1].push([]);
+      weatherPredictionArray[2].push([]);
+    }
+
+    for (let i = 0; i < 23; i++) {
+      weatherPredictionArray[0][i].push(
+        weatherJson.forecast.forecastday[0].hour[i].chance_of_rain
+      );
+      weatherPredictionArray[1][i].push(
+        weatherJson.forecast.forecastday[0].hour[i].chance_of_snow
+      );
+      weatherPredictionArray[2][i].push(
+        weatherJson.forecast.forecastday[0].hour[i].cloud
+      );
+
+      weatherPredictionArray[0][i].push(
+        weatherJson.forecast.forecastday[1].hour[i].chance_of_rain
+      );
+      weatherPredictionArray[1][i].push(
+        weatherJson.forecast.forecastday[1].hour[i].chance_of_snow
+      );
+      weatherPredictionArray[2][i].push(
+        weatherJson.forecast.forecastday[1].hour[i].cloud
+      );
+
+      weatherPredictionArray[0][i].push(
+        weatherJson.forecast.forecastday[2].hour[i].chance_of_rain
+      );
+      weatherPredictionArray[1][i].push(
+        weatherJson.forecast.forecastday[2].hour[i].chance_of_snow
+      );
+      weatherPredictionArray[2][i].push(
+        weatherJson.forecast.forecastday[2].hour[i].cloud
+      );
+    }
+
+    locationArray[0].push(
+      weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
+    );
+
+    locationArray[4].push(weatherJson.location.name);
+  } catch (error) {
+    let errorMessage = document.querySelector(".error-message");
+    errorMessage.innerText = "Enter a valid location name";
   }
-
-  for (let i = 0; i < 23; i++) {
-    locationArray[3].push(weatherJson.forecast.forecastday[0].hour[i]);
-    weatherPredictionArray[0].push([]);
-    weatherPredictionArray[1].push([]);
-    weatherPredictionArray[2].push([]);
-  }
-
-  for (let i = 0; i < 23; i++) {
-    weatherPredictionArray[0][i].push(
-      weatherJson.forecast.forecastday[0].hour[i].chance_of_rain
-    );
-    weatherPredictionArray[1][i].push(
-      weatherJson.forecast.forecastday[0].hour[i].chance_of_snow
-    );
-    weatherPredictionArray[2][i].push(
-      weatherJson.forecast.forecastday[0].hour[i].cloud
-    );
-
-    weatherPredictionArray[0][i].push(
-      weatherJson.forecast.forecastday[1].hour[i].chance_of_rain
-    );
-    weatherPredictionArray[1][i].push(
-      weatherJson.forecast.forecastday[1].hour[i].chance_of_snow
-    );
-    weatherPredictionArray[2][i].push(
-      weatherJson.forecast.forecastday[1].hour[i].cloud
-    );
-
-    weatherPredictionArray[0][i].push(
-      weatherJson.forecast.forecastday[2].hour[i].chance_of_rain
-    );
-    weatherPredictionArray[1][i].push(
-      weatherJson.forecast.forecastday[2].hour[i].chance_of_snow
-    );
-    weatherPredictionArray[2][i].push(
-      weatherJson.forecast.forecastday[2].hour[i].cloud
-    );
-  }
-
-  locationArray[0].push(
-    weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
-  );
-
-  locationArray[4].push(weatherJson.location.name);
 }
 
 renderWeatherInformations("belgium");
@@ -103,6 +110,12 @@ submitButton.addEventListener("click", () => {
 async function renderWeatherInformations(userInput) {
   await getLocationWeather(userInput);
   userInput.value = "";
+
+  let errorMessage = document.querySelector(".error-message");
+
+  if (errorMessage.innerText === "Enter a valid location name") {
+    return;
+  }
 
   renderDaysWeatherInformation();
   renderTodayWeatherInformations();
