@@ -40,6 +40,18 @@ body {
   cursor: pointer;
 }
 
+.error-message-container {
+  display: flex;
+  justify-content: flex-end;
+  color: rgb(241, 39, 39);
+  padding-right: 6.5rem;
+  padding-top: 0.2rem;
+}
+
+.error-message {
+  font-size: 0.9rem;
+}
+
 .weather-container {
   display: flex;
   flex-direction: column;
