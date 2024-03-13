@@ -8,11 +8,10 @@ body {
   background-image: url(../image/mountagne.jpg);
   background-repeat: no-repeat;
   height: auto;
-
-  /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
 
 .search-location-weather-container {
@@ -29,6 +28,7 @@ body {
   border-radius: 3rem;
   width: 14rem;
   height: 1.7rem;
+  padding-left: 0.4rem;
   outline: none;
 }
 
@@ -45,6 +45,87 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  gap: 1.5rem;
   width: 100%;
   height: 100vh;
+}
+
+.location-and-current-date-container span {
+  padding-top: 0.3rem;
+  display: block;
+  color: rgb(34, 116, 116);
+}
+
+.location {
+  font-size: 1.9rem;
+  text-align: center;
+}
+
+.current-date {
+  font-size: 1.2rem;
+}
+
+.current-degrees {
+  font-size: 5rem;
+  color: rgb(23, 23, 216);
+}
+
+.weather-informations-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: rgb(248, 246, 246);
+  width: 25rem;
+  height: 8rem;
+  border-radius: 4rem;
+}
+
+.feel-like-container,
+.humidity-chance-container,
+.wind-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 1.2rem;
+}
+
+.forecast-legend {
+  color: white;
+  font-size: 1.7rem;
+}
+
+.forecast-three-days-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+}
+
+.forecast-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 4rem;
+  background-color: #a5f3fc;
+  border: 4px solid white;
+  width: 9rem;
+  height: 14rem;
+  border-radius: 3rem;
+}
+
+.day-of-the-week {
+  font-size: 1.4rem;
+}
+
+.day-degrees-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.day-degrees {
+  font-size: 1.2rem;
 }
