@@ -12,19 +12,25 @@ async function getLocationWeather(location) {
   for (let i = 0; i < 3; i++) {
     locationArray[i].push(weatherJson.forecast.forecastday[i].day.maxtemp_c);
     locationArray[i].push(weatherJson.forecast.forecastday[i].day.mintemp_c);
-    locationArray[i].push(
-      weatherJson.forecast.forecastday[i].day.daily_chance_of_rain
-    );
-    locationArray[i].push(weatherJson.forecast.forecastday[i].day.avghumidity);
   }
+  locationArray[0].push(
+    weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
+  );
+
   console.log(locationArray);
 }
+
+renderWeatherInformations("belgium");
 
 let submitButton = document.querySelector("#submit-location");
 let userInput = document.querySelector("#user-input");
 
-submitButton.addEventListener("click", async () => {
-  await getLocationWeather(userInput.value);
+submitButton.addEventListener("click", () => {
+  renderWeatherInformations(userInput.value);
+});
+
+async function renderWeatherInformations(userInput) {
+  await getLocationWeather(userInput);
   userInput.value = "";
 
   let firstDayMaximumDegrees = document.querySelector(
@@ -57,5 +63,8 @@ submitButton.addEventListener("click", async () => {
   thirdDayMaximumDegrees.innerText = locationArray[2][0] + "°";
   thirdDayMinimumDegrees.innerText = locationArray[2][1] + "°";
 
+  let dailyChanceOfRain = document.querySelector(".daily-chance-of-rain");
+  dailyChanceOfRain.innerText = locationArray[0][2] + "%";
+
   locationArray = [[], [], []];
-});
+}
