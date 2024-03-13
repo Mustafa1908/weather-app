@@ -1,4 +1,4 @@
-let locationArray = [[], [], []];
+let locationArray = [[], [], [], []];
 
 async function getLocationWeather(location) {
   let userLocation = await fetch(
@@ -17,7 +17,12 @@ async function getLocationWeather(location) {
     weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
   );
 
-  console.log(locationArray);
+  for (let i = 0; i < 23; i++) {
+    locationArray[3].push(weatherJson.forecast.forecastday[0].hour[i]);
+  }
+
+  console.log(weatherJson);
+  console.log(locationArray[3][0].feelslike_c);
 }
 
 renderWeatherInformations("belgium");
@@ -66,5 +71,14 @@ async function renderWeatherInformations(userInput) {
   let dailyChanceOfRain = document.querySelector(".daily-chance-of-rain");
   dailyChanceOfRain.innerText = locationArray[0][2] + "%";
 
-  locationArray = [[], [], []];
+  let currentDate = new Date();
+  let currentHour = currentDate.getHours();
+
+  let degreesFeelsLike = document.querySelector(".degrees-feels-like");
+  degreesFeelsLike.innerText = locationArray[3][currentHour].feelslike_c;
+
+  let currentWindSpeed = document.querySelector(".current-wind-speed");
+  currentWindSpeed.innerText = locationArray[3][currentHour].gust_mph;
+
+  locationArray = [[], [], [], []];
 }
