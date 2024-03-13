@@ -1,4 +1,33 @@
-let locationArray = [[], [], [], []];
+let locationArray = [
+  [],
+  [],
+  [],
+  [],
+  [],
+  [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ],
+  [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+  ],
+];
 
 async function getLocationWeather(location) {
   let userLocation = await fetch(
@@ -13,16 +42,20 @@ async function getLocationWeather(location) {
     locationArray[i].push(weatherJson.forecast.forecastday[i].day.maxtemp_c);
     locationArray[i].push(weatherJson.forecast.forecastday[i].day.mintemp_c);
   }
-  locationArray[0].push(
-    weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
-  );
 
   for (let i = 0; i < 23; i++) {
     locationArray[3].push(weatherJson.forecast.forecastday[0].hour[i]);
   }
 
-  console.log(weatherJson);
-  console.log(locationArray[3][0].feelslike_c);
+  locationArray[0].push(
+    weatherJson.forecast.forecastday[0].day.daily_chance_of_rain
+  );
+
+  locationArray[4].push(weatherJson.location.name);
+
+  console.log(weatherJson.location.name);
+  console.log(locationArray);
+  console.log(locationArray[3]);
 }
 
 renderWeatherInformations("belgium");
@@ -80,5 +113,48 @@ async function renderWeatherInformations(userInput) {
   let currentWindSpeed = document.querySelector(".current-wind-speed");
   currentWindSpeed.innerText = locationArray[3][currentHour].gust_mph;
 
-  locationArray = [[], [], [], []];
+  let currentTemperature = document.querySelector(".current-degrees");
+  currentTemperature.innerText = locationArray[3][currentHour].temp_c + "°";
+
+  let currentLocation = document.querySelector(".current-location");
+  currentLocation.innerText = locationArray[4];
+
+  let currentDay = document.querySelector(".current-date");
+  currentDay.innerText =
+    locationArray[6][currentDate.getDay() - 1] +
+    " " +
+    locationArray[5][currentDate.getMonth()] +
+    " " +
+    currentDate.getDate();
+
+  locationArray = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ],
+    [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday",
+    ],
+  ];
 }
