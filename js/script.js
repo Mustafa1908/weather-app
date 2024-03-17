@@ -188,6 +188,19 @@ function renderDaysWeatherInformation() {
   thirdDayMaximumDegrees.innerText = locationArray[2][0] + "°";
   thirdDayMinimumDegrees.innerText = locationArray[2][1] + "°";
 
+  if (currentDate.getDay() === 0) {
+    let firstDay = document.querySelector(".first-day");
+    firstDay.innerText = locationArray[6][6];
+
+    let secondDay = document.querySelector(".second-day");
+    secondDay.innerText = locationArray[6][currentDate.getDay()];
+
+    let thirdDay = document.querySelector(".third-day");
+    thirdDay.innerText = locationArray[6][currentDate.getDay() + 1];
+
+    return;
+  }
+
   let firstDay = document.querySelector(".first-day");
   firstDay.innerText = locationArray[6][currentDate.getDay() - 1];
 
