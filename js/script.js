@@ -287,6 +287,17 @@ function renderTodayWeatherInformations() {
   currentLocation.innerText = locationArray[4];
 
   let currentDay = document.querySelector(".current-date");
+  if (currentDate.getDay() === 0) {
+    currentDay.innerText =
+      locationArray[6][6] +
+      " " +
+      locationArray[5][currentDate.getMonth()] +
+      " " +
+      currentDate.getDate();
+
+    return;
+  }
+
   currentDay.innerText =
     locationArray[6][currentDate.getDay() - 1] +
     " " +
